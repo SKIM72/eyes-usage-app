@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이즈 모바일 실시간 사용량</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; margin: 0; padding: 20px; box-sizing: border-box; }
+        .card { background: white; padding: 2rem 3rem; border-radius: 15px; box-shadow: 0 8px M30px rgba(0,0,0,0.12); width: 100%; max-width: 500px; }
+        h1 { text-align: center; color: #333; border-bottom: 2px solid #eee; padding-bottom: 1rem; margin-top: 0; }
+        .usage-item { font-size: 1.1rem; color: #555; margin: 1.5rem 0; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; }
+        .usage-item .label { font-weight: 500; margin-right: 1rem; }
+        .usage-item .value { font-weight: 600; color: #007bff; font-size: 1.4rem; text-align: right; }
+        .usage-item .details { font-size: 0.9rem; color: #888; margin-left: 10px; }
+        .error-msg { text-align: center; color: #dc3545; font-weight: 500; padding: 1rem; }
+        small { display: block; text-align: center; margin-top: 2rem; color: #aaa; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>📊 실시간 이용량</h1>
+        
+        {% if data %}
+            <div class="usage-item">
+                <span class="label">📞 음성</span>
+                <span class="value">{{ data.voice_usage }}<span class="details">/ {{ data.voice_total }}</span></span>
+            </div>
+            <div class="usage-item">
+                <span class="label">✉️ 문자</span>
+                <span class="value">{{ data.sms_usage }}<span class="details">/ {{ data.sms_total }}</span></span>
+            </div>
+            <div class="usage-item">
+                <span class="label">🌐 데이터</span>
+                <span class="value">{{ data.data_used }}<span class="details">/ {{ data.data_total }} (잔여: {{ data.data_remaining }})</span></span>
+            </div>
+        {% else %}
+            <p class="error-msg">데이터를 불러오는 데 실패했습니다.<br>잠시 후 새로고침 해주세요.</p>
+        {% endif %}
+
+        <small>조회 시각: {{ updated_time }}</small>
+    </div>
+</body>
+</html>
