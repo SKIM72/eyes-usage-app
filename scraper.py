@@ -19,8 +19,8 @@ def get_usage_data():
     아이즈 모바일 웹사이트에 접속하여 실시간 사용량을 스크래핑하고
     결과를 딕셔너리 형태로 반환하는 함수입니다.
     """
-    user_id = os.environ.get('AIZU_ID')
-    user_pw = os.environ.get('AIZU_PW')
+    user_id = os.environ.get('EYES_ID')
+    user_pw = os.environ.get('EYES_PW')
     main_page_url = 'https://www.eyes.co.kr/'
     usage_url = 'https://www.eyes.co.kr/mypage/main' 
 
