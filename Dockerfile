@@ -1,7 +1,7 @@
 # Dockerfile
 
 # 1. 파이썬 3.9 버전을 기반으로 시작
-FROM python:3.9-slim
+FROM python:3.9
 
 # 2. 크롬 브라우저 설치에 필요한 패키지 및 크롬 브라우저 설치
 RUN apt-get update && apt-get install -y \
