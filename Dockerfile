@@ -1,15 +1,17 @@
-# Dockerfile
+# Dockerfile (최종 수정본)
 
-# 1. 파이썬 3.9 버전을 기반으로 시작
+# 1. 파이썬 3.9 표준 버전을 기반으로 시작
 FROM python:3.9
 
-# 2. 크롬 브라우저 설치에 필요한 패키지 및 크롬 브라우저 설치
+# 2. 크롬 브라우저 설치 (apt-key를 사용하지 않는 최신 방식)
 RUN apt-get update && apt-get install -y \
-    wget \
     gnupg \
-    unzip \
-    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+    wget \
+    # Google Chrome의 GPG 키를 다운로드하고 저장
+    && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-archive-keyring.gpg \
+    # Google Chrome 저장소를 시스템에 추가
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome-archive-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
+    # 패키지 목록을 다시 업데이트하고 크롬 설치
     && apt-get update \
     && apt-get install -y google-chrome-stable
 
@@ -23,5 +25,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 5. 프로젝트 파일 복사
 COPY . .
 
-# 6. gunicorn을 사용해 웹 서버 실행 (Render는 기본적으로 10000번 포트를 사용)
+# 6. gunicorn을 사용해 웹 서버 실행
 CMD ["gunicorn", "--bind", "0.0.0.0:10000", "app:app"]
