@@ -26,4 +26,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # 6. gunicorn을 사용해 웹 서버 실행
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--timeout", "120", "app:app"]
